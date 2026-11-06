@@ -1,0 +1,10 @@
+{
+  "name": "DilSeSunn",
+  "description": "An anonymous, empathetic peer support haven for strangers to share life problems, find a listening shoulder, and connect in real-time via safe messaging or voice call.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

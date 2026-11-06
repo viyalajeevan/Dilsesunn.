@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Clean up any stale Service Workers or caches that might serve old blank previews
+      if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+        try {
+          navigator.serviceWorker.getRegistrations().then(function (registrations) {
+            for (var i = 0; i < registrations.length; i++) {
+              registrations[i].unregister();
+            }
+          }).catch(function () {});
+          if ('caches' in window) {
+            caches.keys().then(function (names) {
+              for (var j = 0; j < names.length; j++) {
+                if (names[j].indexOf('workbox') !== -1 || names[j].indexOf('precache') !== -1) {
+                  caches.delete(names[j]);
+                }
+              }
+            }).catch(function () {});
+          }
+        } catch (e) {}
+      }
+
+      // Suppress Vite HMR WebSocket errors in AI Studio iframe where HMR is disabled
+      window.addEventListener('unhandledrejection', function (event) {
+        var msg = (event && event.reason && (event.reason.message || event.reason)) || '';
+        if (typeof msg === 'string' && (msg.indexOf('WebSocket') !== -1 || msg.indexOf('HMR') !== -1)) {
+          event.preventDefault();
+        }
+      });
+      window.addEventListener('error', function (event) {
+        var msg = (event && (event.message || '')) || '';
+        if (typeof msg === 'string' && (msg.indexOf('WebSocket') !== -1 || msg.indexOf('HMR') !== -1)) {
+          event.preventDefault();
+        }
+      });
+    </script>
+    <title>DilSeSunn — Anonymous Peer Support &amp; Empathetic Listening</title>
+    <meta name="description" content="An anonymous, empathetic peer support haven for strangers to share life problems, find a listening shoulder, and connect in real-time via safe messaging or voice call." />
+    <meta property="og:title" content="DilSeSunn — Anonymous Peer Support &amp; Empathetic Listening" />
+    <meta property="og:description" content="An anonymous, empathetic peer support haven for strangers to share life problems, find a listening shoulder, and connect in real-time via safe messaging or voice call." />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="DilSeSunn" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
